@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberScore</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">🛡️ CyberScore</h1>
+    <p class="tagline">Know how safe you are online</p>
+  </header>
+
+  <!-- SCORE SECTION -->
+  <section class="score-section">
+    <div class="score-circle" id="score-circle">
+      <span class="score-number" id="score-number">0</span>
+      <span class="score-label">/ 100</span>
+    </div>
+    <p class="score-band" id="score-band">Enter your details below</p>
+  </section>
+
+  <!-- INPUT SECTION -->
+  <section class="input-section">
+    <div class="input-group">
+      <label for="email-input">Your Email</label>
+      <input type="email" id="email-input" placeholder="you@example.com" />
+    </div>
+
+    <div class="input-group">
+      <label for="password-input">Your Password</label>
+      <input type="password" id="password-input" placeholder="Enter a password to test" />
+      <div class="strength-bar">
+        <div class="strength-fill" id="strength-fill"></div>
+      </div>
+      <p class="strength-label" id="strength-label">Enter a password</p>
+    </div>
+
+    <button class="check-btn" id="check-btn">Check My Score</button>
+  </section>
+
+  <!-- MODULE CARDS -->
+  <section class="modules-section">
+    <div class="module-card" id="card-password">
+      <div class="module-title">Password Strength</div>
+      <div class="module-score" id="mod-password">0 / 25</div>
+    </div>
+    <div class="module-card" id="card-breach">
+      <div class="module-title">Breach Check</div>
+      <div class="module-score" id="mod-breach">0 / 25</div>
+    </div>
+    <div class="module-card" id="card-quiz">
+      <div class="module-title">Awareness Quiz</div>
+      <div class="module-score" id="mod-quiz">0 / 20</div>
+    </div>
+    <div class="module-card" id="card-twofa">
+      <div class="module-title">2FA Checklist</div>
+      <div class="module-score" id="mod-twofa">0 / 30</div>
+    </div>
+  </section>
+
+  <!-- BREACH RESULT -->
+  <section class="result-section" id="breach-result" style="display:none;">
+    <p id="breach-text">Checking...</p>
+  </section>
+
+  <!-- QUIZ SECTION (hidden for now) -->
+  <section class="quiz-section" id="quiz-section" style="display:none;">
+    <p class="quiz-progress" id="quiz-progress">Question 1 of 10</p>
+    <p class="quiz-question" id="quiz-question">Loading...</p>
+    <div class="quiz-options" id="quiz-options"></div>
+  </section>
+
+  <!-- FIX-IT CARDS (hidden for now) -->
+  <section class="fixit-section" id="fixit-section" style="display:none;">
+    <h2>Your Fix-It Plan</h2>
+    <div id="fixit-cards"></div>
+  </section>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+
+  <script src="quiz.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
