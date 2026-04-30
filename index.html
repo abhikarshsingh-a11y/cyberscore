@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberScore</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <button class="lang-toggle" id="lang-btn" onclick="toggleLanguage()">🇮🇳 हिंदी</button>
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo" data-en="🛡️ CyberScore" data-hi="🛡️ साइबरस्कोर">🛡️ CyberScore</h1>
+    <p class="tagline" data-en="Know how safe you are online" data-hi="जानें आप ऑनलाइन कितने सुरक्षित हैं">Know how safe you are online</p>
+  </header>
+
+  <!-- SCORE SECTION -->
+  <section class="score-section">
+    <div class="score-circle" id="score-circle">
+      <span class="score-number" id="score-number">0</span>
+      <span class="score-label">/ 100</span>
+    </div>
+    <p class="score-band" id="score-band" data-en="Enter your details below" data-hi="नीचे अपनी जानकारी भरें">Enter your details below</p>
+
+    <!-- BADGE -->
+    <div class="score-badge" id="score-badge" style="display:none;"></div>
+  </section>
+
+  <!-- INPUT SECTION -->
+  <section class="input-section">
+
+    <div class="input-group">
+      <label for="email-input" data-en="Your Email" data-hi="आपका ईमेल">Your Email</label>
+      <input type="email" id="email-input" placeholder="you@example.com" />
+      <div id="email-breach-result" class="inline-result" style="display:none"></div>
+    </div>
+
+    <div class="input-group">
+      <label for="password-input" data-en="Your Password" data-hi="आपका पासवर्ड">Your Password</label>
+      <input type="password" id="password-input" placeholder="Enter a password to test" />
+      <div class="strength-bar">
+        <div class="strength-fill" id="strength-fill"></div>
+      </div>
+      <p class="strength-label" id="strength-label" data-en="Enter a password" data-hi="पासवर्ड डालें">Enter a password</p>
+      <div id="password-breach-result" class="inline-result" style="display:none"></div>
+    </div>
+
+    <button class="check-btn" id="check-btn" data-en="Check My Score" data-hi="मेरा स्कोर जाँचें">Check My Score</button>
+
+  </section>
+
+  <!-- MODULE CARDS -->
+  <section class="modules-section">
+    <div class="module-card" id="card-password">
+      <div class="module-icon">🔑</div>
+      <div class="module-title" data-en="Password Strength" data-hi="पासवर्ड की ताकत">Password Strength</div>
+      <div class="module-score" id="mod-password">0 / 20</div>
+    </div>
+    <div class="module-card" id="card-pwdbreach">
+      <div class="module-icon">🔓</div>
+      <div class="module-title" data-en="Password Breach" data-hi="पासवर्ड उल्लंघन">Password Breach</div>
+      <div class="module-score" id="mod-pwdbreach">0 / 20</div>
+    </div>
+    <div class="module-card" id="card-emailbreach">
+      <div class="module-icon">📧</div>
+      <div class="module-title" data-en="Email Breach" data-hi="ईमेल उल्लंघन">Email Breach</div>
+      <div class="module-score" id="mod-emailbreach">0 / 20</div>
+    </div>
+    <div class="module-card" id="card-quiz">
+      <div class="module-icon">🧠</div>
+      <div class="module-title" data-en="Awareness Quiz" data-hi="जागरूकता क्विज़">Awareness Quiz</div>
+      <div class="module-score" id="mod-quiz">0 / 20</div>
+    </div>
+    <div class="module-card" id="card-twofa">
+      <div class="module-icon">🔐</div>
+      <div class="module-title" data-en="2FA Checklist" data-hi="2FA चेकलिस्ट">2FA Checklist</div>
+      <div class="module-score" id="mod-twofa">0 / 20</div>
+    </div>
+  </section>
+
+  <!-- 2FA CHECKLIST SECTION -->
+  <section class="twofa-section" id="twofa-section" style="display:none;">
+    <h2 data-en="🔐 2FA Checklist" data-hi="🔐 2FA चेकलिस्ट">🔐 2FA Checklist</h2>
+    <p class="twofa-subtitle" data-en="Tick every app where you have 2FA enabled" data-hi="उन ऐप्स पर टिक करें जहाँ आपने 2FA चालू किया है">Tick every app where you have 2FA enabled</p>
+
+    <div class="twofa-list">
+      <label class="twofa-item">
+        <input type="checkbox" class="twofa-check" data-pts="4" />
+        <span class="twofa-icon">📧</span>
+        <span class="twofa-name" data-en="Gmail / Email" data-hi="जीमेल / ईमेल">Gmail / Email</span>
+      </label>
+      <label class="twofa-item">
+        <input type="checkbox" class="twofa-check" data-pts="4" />
+        <span class="twofa-icon">📸</span>
+        <span class="twofa-name" data-en="Instagram" data-hi="इंस्टाग्राम">Instagram</span>
+      </label>
+      <label class="twofa-item">
+        <input type="checkbox" class="twofa-check" data-pts="4" />
+        <span class="twofa-icon">💬</span>
+        <span class="twofa-name" data-en="WhatsApp" data-hi="व्हाट्सऐप">WhatsApp</span>
+      </label>
+      <label class="twofa-item">
+        <input type="checkbox" class="twofa-check" data-pts="4" />
+        <span class="twofa-icon">🏦</span>
+        <span class="twofa-name" data-en="Banking App" data-hi="बैंकिंग ऐप">Banking App</span>
+      </label>
+      <label class="twofa-item">
+        <input type="checkbox" class="twofa-check" data-pts="4" />
+        <span class="twofa-icon">🐦</span>
+        <span class="twofa-name" data-en="Twitter / X" data-hi="ट्विटर / X">Twitter / X</span>
+      </label>
+    </div>
+
+    <p class="twofa-score-label" id="twofa-score-label" data-en="0 / 5 apps protected" data-hi="0 / 5 ऐप्स सुरक्षित">0 / 5 apps protected</p>
+  </section>
+
+  <!-- BREACH RESULT -->
+  <section class="result-section" id="breach-result" style="display:none;">
+    <p id="breach-text">Checking...</p>
+  </section>
+
+  <!-- QUIZ SECTION -->
+  <section class="quiz-section" id="quiz-section" style="display:none;">
+    <p class="quiz-progress" id="quiz-progress" data-en="Question 1 of 10" data-hi="प्रश्न 1 / 10 में से">Question 1 of 10</p>
+    <p class="quiz-question" id="quiz-question">Loading...</p>
+    <div class="quiz-options" id="quiz-options"></div>
+  </section>
+
+  <!-- FIX-IT CARDS -->
+  <section class="fixit-section" id="fixit-section" style="display:none;">
+    <h2 data-en="🛠️ Your Fix-It Plan" data-hi="🛠️ आपकी सुधार योजना">🛠️ Your Fix-It Plan</h2>
+    <p class="fixit-subtitle" data-en="Fix these to improve your score" data-hi="इन्हें ठीक करके अपना स्कोर बढ़ाएं">Fix these to improve your score</p>
+    <div id="fixit-cards"></div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+  <script src="quiz.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
