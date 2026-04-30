@@ -1,5 +1,6 @@
-// ---- QUIZ QUESTIONS ----
-// Each question has: question text, 4 options, correct answer index (0=A, 1=B, 2=C, 3=D)
+// ════════════════════════════════════════════
+// QUIZ QUESTIONS — 10 questions, 2 pts each = 20 pts max
+// ════════════════════════════════════════════
 let quizQuestions = [
   {
     q: "You get a call from 'bank support' asking for your OTP. What do you do?",
@@ -32,7 +33,7 @@ let quizQuestions = [
     correct: 1
   },
   {
-    q: "Your friend sends a message: 'I am stuck, send me Rs.5000 urgently'. What do you do?",
+    q: "Your friend sends: 'I am stuck, send me Rs.5000 urgently'. What do you do?",
     options: ["Send money immediately", "Call your friend directly to verify", "Send half the amount", "Ignore forever"],
     correct: 1
   },
@@ -47,45 +48,54 @@ let quizQuestions = [
     correct: 2
   },
   {
-    q: "A website shows a lock icon (https) in the browser. This means?",
+    q: "A website shows a lock icon (https). This means?",
     options: ["The site is 100% safe", "Your connection is encrypted", "The site is government approved", "Your data is stored safely"],
     correct: 1
   }
 ]
 
-// ---- QUIZ STATE ----
+// ════════════════════════════════════════════
+// QUIZ STATE
+// ════════════════════════════════════════════
 let currentQuestion = 0
 let quizScore       = 0
+let quizStarted     = false
 
-// ---- START QUIZ ----
+// ════════════════════════════════════════════
+// START QUIZ
+// ════════════════════════════════════════════
 function startQuiz() {
+  // Don't restart if already started
+  if (quizStarted) return
+  quizStarted     = true
   currentQuestion = 0
   quizScore       = 0
   loadQuestion(0)
 }
 
-// ---- LOAD ONE QUESTION ----
+// ════════════════════════════════════════════
+// LOAD ONE QUESTION
+// ════════════════════════════════════════════
 function loadQuestion(index) {
   let data     = quizQuestions[index]
   let progress = document.getElementById('quiz-progress')
   let question = document.getElementById('quiz-question')
   let options  = document.getElementById('quiz-options')
 
-  // Update progress text
+  // Update progress
   progress.textContent = 'Question ' + (index + 1) + ' of ' + quizQuestions.length
 
   // Update question text
   question.textContent = data.q
 
-  // Clear old answer buttons
+  // Clear old buttons
   options.innerHTML = ''
 
-  // Create a button for each option
+  // Create answer buttons
   data.options.forEach(function(optionText, i) {
-    let btn       = document.createElement('button')
+    let btn         = document.createElement('button')
     btn.textContent = optionText
 
-    // When user clicks an answer
     btn.addEventListener('click', function() {
       selectAnswer(i, data.correct, options)
     })
@@ -94,23 +104,25 @@ function loadQuestion(index) {
   })
 }
 
-// ---- HANDLE ANSWER SELECTION ----
+// ════════════════════════════════════════════
+// HANDLE ANSWER SELECTION
+// ════════════════════════════════════════════
 function selectAnswer(chosen, correct, optionsDiv) {
   let buttons = optionsDiv.querySelectorAll('button')
 
-  // Disable all buttons so user cannot change answer
+  // Disable all buttons immediately
   buttons.forEach(function(btn) {
     btn.disabled = true
   })
 
-  // Highlight correct answer green
+  // Show correct answer in green
   buttons[correct].classList.add('correct')
 
-  // If wrong, highlight chosen red
+  // Show wrong answer in red if user picked wrong
   if (chosen !== correct) {
     buttons[chosen].classList.add('wrong')
   } else {
-    // Correct answer — add 2 points
+    // Correct! Add 2 points
     quizScore = quizScore + 2
   }
 
@@ -119,16 +131,16 @@ function selectAnswer(chosen, correct, optionsDiv) {
     currentQuestion = currentQuestion + 1
 
     if (currentQuestion < quizQuestions.length) {
-      // Load next question
       loadQuestion(currentQuestion)
     } else {
-      // Quiz finished!
       finishQuiz()
     }
   }, 1000)
 }
 
-// ---- QUIZ FINISHED ----
+// ════════════════════════════════════════════
+// QUIZ FINISHED
+// ════════════════════════════════════════════
 function finishQuiz() {
   // Save quiz score to global scores object
   scores.quiz = quizScore
@@ -136,9 +148,28 @@ function finishQuiz() {
   // Hide quiz section
   document.getElementById('quiz-section').style.display = 'none'
 
-  // Update the score display
+  // Update score display
   updateScoreDisplay()
 
-  // Show final message
-  alert('Quiz done! You scored ' + quizScore + ' / 20')
+  // Show 2FA checklist after quiz finishes
+  document.getElementById('twofa-section').style.display = 'block'
+
+  // Show result message
+  let msg = document.getElementById('quiz-result-msg')
+  if (msg) {
+    msg.style.display = 'block'
+    if (quizScore >= 16) {
+      msg.style.background = '#c6f6d5'
+      msg.style.border     = '1px solid #38a169'
+      msg.textContent      = '🎉 Quiz done! You scored ' + quizScore + ' / 20. Great awareness!'
+    } else if (quizScore >= 10) {
+      msg.style.background = '#fefcbf'
+      msg.style.border     = '1px solid #d69e2e'
+      msg.textContent      = '📚 Quiz done! You scored ' + quizScore + ' / 20. Keep learning!'
+    } else {
+      msg.style.background = '#fed7d7'
+      msg.style.border     = '1px solid #e53e3e'
+      msg.textContent      = '⚠️ Quiz done! You scored ' + quizScore + ' / 20. Please improve your cyber awareness!'
+    }
+  }
 }
